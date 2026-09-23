@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>High Availability Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h1> High Availability Monitoring Dashboard</h1>
+
+    <div class="subtitle">
+        Node.js • Docker • NGINX Load Balancer
+    </div>
+
+    <!-- Overall system status banner -->
+    <div id="systemStatus" class="system-status">
+        <span class="dot"></span>
+        <span id="systemStatusText">Checking system status…</span>
+    </div>
+
+    <!-- Aggregate stats -->
+    <div class="stats-row">
+        <div class="stat">
+            <div class="stat-value" id="statOnline">-</div>
+            <div class="stat-label">Servers Online</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="statTotalRequests">-</div>
+            <div class="stat-label">Total Requests</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="statAvgLatency">-</div>
+            <div class="stat-label">Avg Response Time</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="statUptime">-</div>
+            <div class="stat-label">Fleet Uptime</div>
+        </div>
+    </div>
+
+    <div class="dashboard">
+
+        <div id="server1" class="card">
+
+            <h2>Server 1</h2>
+
+            <div class="status">Loading...</div>
+
+            <p>Requests : <span class="requests">0</span></p>
+
+            <p>Uptime : <span class="uptime">0</span></p>
+
+            <p>Hostname : <span class="hostname">-</span></p>
+
+            <p>Response time : <span class="latency">-</span></p>
+
+            <p>Time : <span class="time">-</span></p>
+
+            <div class="history" title="Last checks (newest on the right)"></div>
+
+        </div>
+
+        <div id="server2" class="card">
+
+            <h2>Server 2</h2>
+
+            <div class="status">Loading...</div>
+
+            <p>Requests : <span class="requests">0</span></p>
+
+            <p>Uptime : <span class="uptime">0</span></p>
+
+            <p>Hostname : <span class="hostname">-</span></p>
+
+            <p>Response time : <span class="latency">-</span></p>
+
+            <p>Time : <span class="time">-</span></p>
+
+            <div class="history" title="Last checks (newest on the right)"></div>
+
+        </div>
+
+    </div>
+
+    <!-- Load distribution -->
+    <div class="panel">
+        <h3>Load Distribution</h3>
+        <div class="load-bar">
+            <div id="loadServer1" class="load-segment load-1">0%</div>
+            <div id="loadServer2" class="load-segment load-2">0%</div>
+        </div>
+        <div class="load-legend">
+            <span><i class="swatch swatch-1"></i>Server 1</span>
+            <span><i class="swatch swatch-2"></i>Server 2</span>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="panel controls">
+        <button id="pauseBtn" type="button">⏸ Pause</button>
+        <button id="refreshBtn" type="button">🔄 Refresh now</button>
+
+        <label for="intervalSelect">Poll every</label>
+        <select id="intervalSelect">
+            <option value="1000">1s</option>
+            <option value="3000" selected>3s</option>
+            <option value="5000">5s</option>
+            <option value="10000">10s</option>
+        </select>
+
+        <span id="nextCheckLabel" class="next-check"></span>
+    </div>
+
+    <!-- Incident / event log -->
+    <div class="panel">
+        <h3>Event Log</h3>
+        <ul id="eventLog" class="event-log">
+            <li class="event-empty">No events yet — watching for status changes…</li>
+        </ul>
+    </div>
+
+    <div class="footer">
+
+        <h3>Load Balancer</h3>
+
+        <p>Algorithm : Round Robin</p>
+
+        <p id="updated"></p>
+
+    </div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

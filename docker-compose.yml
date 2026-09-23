@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+
+  server1:
+    build: ./server1
+    container_name: server1
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+    networks:
+      - ha-network
+
+  server2:
+    build: ./server2
+    container_name: server2
+    ports:
+      - "3002:3002"
+    restart: unless-stopped
+    networks:
+      - ha-network
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx-load-balancer
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./dashboard:/usr/share/nginx/html/dashboard:ro
+    depends_on:
+      - server1
+      - server2
+    restart: always
+    networks:
+      - ha-network
+
+networks:
+  ha-network:
+    driver: bridge
